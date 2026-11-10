@@ -1,0 +1,15 @@
+# Accounts you post from. These are YOUR accounts, each logged in by you through
+# the platform's own OAuth screen (tokens land in data/, never here).
+#
+# A brand is one public identity. It holds at most ONE account per platform:
+# that's how the file is shaped, and the loader rejects the same account under two brands.
+# Running a second brand (e.g. an official clips channel for a creator you work with) is fine.
+# Running many accounts to repost the same clips is spam on every platform; this tool won't do it.
+
+brands:
+  - id: main
+    name: My main brand
+    accounts:
+      youtube: { handle: "@your-channel" }     # placeholders: live mode refuses to start with these
+      tiktok: { username: "your-tiktok" }
+      instagram: { username: "your-instagram" }

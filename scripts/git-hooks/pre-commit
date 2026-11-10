@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Blocks commits that would publish secrets, footage or permission paperwork. THIS REPO IS PUBLIC.
+# Enable once per clone:  git config core.hooksPath scripts/git-hooks
+set -u
+fail=0
+
+files=$(git diff --cached --name-only --diff-filter=ACMR)
+[ -z "$files" ] && exit 0
+
+# 1. Files that must never be committed.
+bad_paths=$(printf '%s\n' "$files" \
+  | grep -E '(^|/)\.env($|\.)|(^|/)client_secret[^/]*\.json$|(^|/)(secrets|tokens|rights|data)/|(^|/)inbox/.+|\.(key|pem|sqlite|mp4|mov|mkv|webm)$' \
+  | grep -vE '(^|/)\.env\.example$|(^|/)inbox/\.gitkeep$' || true)
+if [ -n "$bad_paths" ]; then
+  echo "pre-commit: BLOCKED. These files must never be committed (public repo):" >&2
+  printf '%s\n' "$bad_paths" | sed 's/^/  /' >&2
+  fail=1
+fi
+
+# 2. Secret-shaped strings in the lines being added.
+#    Anthropic key | Google OAuth secret | Google refresh token | Telegram bot token | GitHub token | Meta/TikTok style long hex secret assignments
+patterns='sk-ant-[A-Za-z0-9_-]{20,}|GOCSPX-[A-Za-z0-9_-]{20,}|1//[A-Za-z0-9_-]{40,}|[0-9]{8,10}:[A-Za-z0-9_-]{35}|gh[pousr]_[A-Za-z0-9]{36}|(SECRET|TOKEN|API_KEY)=[A-Za-z0-9_-]{24,}'
+
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  added=$(git diff --cached -U0 --no-color -- "$f" | grep -E '^\+' | grep -vE '^\+\+\+ ' || true)
+  [ -z "$added" ] && continue
+  if printf '%s\n' "$added" | grep -qE "$patterns"; then
+    echo "pre-commit: BLOCKED. $f looks like it contains a secret (API key, OAuth secret or token, bot token or GitHub token)." >&2
+    fail=1
+  fi
+done <<EOT
+$files
+EOT
+
+if [ "$fail" -ne 0 ]; then
+  echo "Secrets go in .env (gitignored). Footage goes in inbox/ and permission paperwork in rights/ (both gitignored). Don't bypass with --no-verify." >&2
+  exit 1
+fi
+exit 0

@@ -1,0 +1,24 @@
+# Guardrails: how clips are cut, who approves them, and how often you post.
+#
+# EVERY NUMBER HERE IS A PLACEHOLDER, NOT A RECOMMENDATION. Live mode refuses to start
+# while status is "placeholder".
+status: placeholder        # change to "set" once you've chosen real values
+
+clip:
+  min_seconds: 20
+  max_seconds: 60
+  max_per_source_hour: 4             # most clips cut from one hour of footage
+
+select:
+  provider: heuristic                # heuristic (free, built in) | claude (needs ANTHROPIC_API_KEY, ships in M3)
+  model: claude-opus-5-5             # used only with provider: claude. claude-haiku-5-5 is the low-cost option (docs/ARCHITECTURE.md, Costs)
+
+review:
+  mode: manual                       # manual: you approve every clip | auto: clips at or above the confidence post unreviewed
+  auto_min_confidence: null          # 0..1, required for auto
+
+publish:
+  max_posts_per_account_per_day: 2   # hard ceiling: 5
+  min_minutes_between_posts: 180     # hard floor: 60
+  windows: ["11:00-13:00", "18:00-21:00"]   # local posting windows
+  timezone: America/New_York

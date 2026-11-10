@@ -1,0 +1,31 @@
+# Secrets: never commit
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets/
+tokens/
+client_secret*.json
+
+# Permission paperwork (contracts, DMs, campaign terms) stays out of a public repo
+rights/
+
+# Footage and runtime state
+inbox/*
+!inbox/.gitkeep
+data/
+*.sqlite
+*.sqlite-journal
+logs/
+*.log
+*.mp4
+*.mov
+*.mkv
+*.webm
+
+# Build
+node_modules/
+dist/
+coverage/
+.DS_Store

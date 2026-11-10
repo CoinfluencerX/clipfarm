@@ -1,0 +1,37 @@
+# Sources: the footage you cut clips from, and WHY you're allowed to.
+#
+# THE ONE RULE: every source carries a rights record. No record, no ingest, no post.
+# See docs/RIGHTS.md. The loader rejects a source without one.
+#
+#   basis: own       your own recordings. Nothing else needed.
+#   basis: license   a creator gave you written permission to clip and repost.
+#   basis: campaign  a paid clipping campaign whose terms allow it.
+#
+# license and campaign also need: granted_by, evidence, platforms, monetization, credit.
+# Keep the paperwork itself in rights/ (gitignored). Never commit contracts or DMs.
+
+sources:
+  - id: my-builds
+    name: My own build recordings
+    rights:
+      basis: own
+    ingest:
+      kind: local-folder
+      path: inbox/my-builds          # drop recordings here (inbox/ is gitignored)
+    publish_to: [main]
+
+  # Example of a licensed creator. Uncomment and fill in once you have the permission in writing.
+  # - id: creator-example
+  #   name: Example Creator stream VODs
+  #   rights:
+  #     basis: license
+  #     granted_by: "Example Creator (manager: name@example.com)"
+  #     evidence: rights/creator-example/2026-11-permission.pdf
+  #     platforms: [youtube, tiktok]   # posting anywhere else is refused
+  #     monetization: true
+  #     credit: "🎥 @examplecreator"
+  #     expires: "2027-05-31"          # optional; ingest and posting stop the day after
+  #   ingest:
+  #     kind: local-folder
+  #     path: inbox/creator-example    # files the creator sent you
+  #   publish_to: [main]
