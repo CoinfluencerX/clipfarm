@@ -4,17 +4,18 @@
 !.env.example
 *.key
 *.pem
-secrets/
-tokens/
+/secrets/
+/tokens/
 client_secret*.json
 
-# Permission paperwork (contracts, DMs, campaign terms) stays out of a public repo
-rights/
+# Permission paperwork (contracts, DMs, campaign terms) stays out of a public repo.
+# Anchored to the repo root on purpose: src/rights/ is code and must be tracked.
+/rights/
 
 # Footage and runtime state
-inbox/*
-!inbox/.gitkeep
-data/
+/inbox/*
+!/inbox/.gitkeep
+/data/
 *.sqlite
 *.sqlite-journal
 logs/
