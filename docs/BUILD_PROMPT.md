@@ -37,14 +37,17 @@ M2  Transcription. A whisperX runner behind the Transcriber interface that
     rendered clip (I'll watch it).
 M3  Claude selector behind the Selector interface: transcript and signal
     timestamps in one request, structured output back, model from
-    guardrails.yaml. Add loudness peaks next to chat peaks. Verify: on three
-    recordings of mine, show me its picks next to the heuristic's, with
-    token counts and cost per recording.
+    guardrails.yaml (default claude-haiku-5-5). Add loudness peaks next to
+    chat peaks. Verify: on three recordings of mine, show me the picks of
+    the heuristic, Haiku and Sonnet side by side, with token counts and
+    cost per recording, so I can see whether a bigger model earns its price.
 M4  Render quality and review. Face-tracked focus point for the crop, a
     split layout for facecam + screen, two caption styles, and a local
     review page with approve / reject buttons. Verify: I review a batch of
     ten clips on the page from my phone.
-M5  Publishers. YouTube Data API first (OAuth, private upload), then one
+M5  Publishers. First a hand-off folder for people who post by hand (the
+    free route): one folder per post with the clip, the caption as text and
+    the time. Then YouTube Data API (OAuth, private upload), then one
     posting-service publisher, each with remove() for takedowns. Unlock live
     mode. Verify: I post one clip to my own channel as private, then
     withdraw it, and both show in the audit log.
@@ -71,6 +74,10 @@ HARD RULES:
   installing it.
 - Keep guardrail numbers in config/guardrails.yaml with safe placeholders.
   I'll set the real values.
+- Free by default. Every paid service is opt-in and uses the key of the
+  person running it. Never add a shared key, a hosted backend, telemetry
+  or anything that phones home. The free route (own computer, local
+  transcription, heuristic picking, posting by hand) must keep working.
 
 STOP AND ASK ME WHEN: an API plan, audit or credential is missing; a
 platform can't be posted to without breaking its terms; a source's rights

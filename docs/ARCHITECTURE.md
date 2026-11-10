@@ -78,30 +78,12 @@ Each step picks up the work the previous steps left in the database, so a run ca
 
 ## Costs
 
-Clip picking is the only model cost, and it's small. One hour of speech is about 13,000 tokens in and 1,500 out.
-
-| Clip picking | Cost per hour of footage |
-|---|---|
-| Built-in heuristic | $0 |
-| Claude Haiku 5.5 ($0.10 / $0.50 per 1M tokens) | about $0.002 |
-| Claude Sonnet 5.5 ($2 / $10) | about $0.04 |
-| Claude Opus 5.5 ($4 / $20) | about $0.08 |
-
-Monthly running cost, rough:
-
-| Item | 1–2 sources, ~5 clips a day | 5–10 sources, ~30 clips a day |
-|---|---|---|
-| Server (transcription + ffmpeg) | $10–25 | $40–90 |
-| Storage | $0–5 | $10–25 |
-| Clip picking | $0–5 | $5–30 |
-| Posting service (optional, skips the API audits) | $0–50 | $50–150 |
-| **Total** | **about $25–60** | **about $100–300** |
-
-Transcription runs on the server's CPU at no extra cost, slower than real time on a small machine.
+Free by default: every paid service is opt-in, and each person brings their own key and pays their own bill. Clip picking with Claude is the only model cost, at about $0.002 per hour of footage on the default model. The full breakdown is in [COSTS.md](COSTS.md).
 
 ## Infrastructure
 - **Language**: TypeScript on Node 22, run directly with no build step. Dependencies: `yaml` and `zod`.
 - **Local tools**: ffmpeg and ffprobe. whisperX from M2.
-- **Host**: your own computer for dry-run. For daily unattended runs, a 4–8 vCPU VPS and a cron entry that calls `npm start -- --run`.
+- **Host**: your own computer is enough. For runs while it's off, a small VPS and a cron entry that calls `npm start -- --run`.
+- **No shared anything**: no hosted backend, no shared keys, no telemetry. Each person runs their own copy.
 - **Secrets**: `.env` only. OAuth tokens land in `data/` (gitignored). The pre-commit hook blocks secrets, footage and permission paperwork.
 - **Building it**: a coding agent such as Claude Code writes the milestones from [BUILD_PROMPT.md](BUILD_PROMPT.md). Nothing in the running system needs an agent. If you want to check on it from your phone, a chat agent can sit on top of the same CLI later.

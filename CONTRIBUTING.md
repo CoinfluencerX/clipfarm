@@ -27,6 +27,10 @@ Every change needs tests. The suite runs without ffmpeg, without network and wit
 
 Follow [docs/BUILD_PROMPT.md](docs/BUILD_PROMPT.md) for the milestone order.
 
+## Free by default
+
+Anyone should be able to run this for $0 on their own computer. A feature that needs a paid service is opt-in, uses the key of the person running it, and leaves the free route working. No shared keys, no hosted backend, no telemetry. See [docs/COSTS.md](docs/COSTS.md).
+
 ## What won't be merged
 
 The project only works, legally and practically, because of these. See the [README](README.md#what-it-wont-do).

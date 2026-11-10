@@ -9,6 +9,14 @@ An open-source clip pipeline. It turns long recordings **you have the rights to*
 Needs Node ≥ 22.18 and ffmpeg. TypeScript runs directly, so there's no build step.
 
 ```bash
+git clone https://github.com/CoinfluencerX/clipfarm.git
+```
+
+```bash
+cd clipfarm
+```
+
+```bash
 npm install
 ```
 
@@ -60,6 +68,12 @@ A source is footage you own, footage a creator gave you written permission to cl
 
 This is also why the project works at all. Clips of other people's content posted without permission get matched by fingerprinting (small edits don't beat it), the accounts get strikes, and the earnings get clawed back. With permission, the same automation is a business.
 
+## What it costs
+
+**Free by default.** You run your own copy on your own computer with your own accounts. Transcription, cutting, captions and review cost nothing, and you can post by hand or schedule inside each app for free.
+
+The one upgrade that changes the result is Claude clip picking, at about $0.002 per hour of footage on the default model. You use your own API key and pay your own bill. Nothing is shared between people who use this, and the project sends nothing anywhere. Full breakdown: [docs/COSTS.md](docs/COSTS.md).
+
 ## How it works
 
 | Part | Job |
@@ -78,7 +92,8 @@ Full design: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 ## Docs
 
-- [Architecture](docs/ARCHITECTURE.md): components, data model, costs, hosting
+- [Architecture](docs/ARCHITECTURE.md): components, data model, hosting
+- [Costs](docs/COSTS.md): the free setup, the cheap upgrade, and what each person pays for
 - [Rights](docs/RIGHTS.md): the rights record, and how to get permission
 - [Platforms](docs/PLATFORMS.md): the official posting route and limits for each platform
 - [Build prompt](docs/BUILD_PROMPT.md): paste it into Claude Code to build the next milestone
@@ -102,8 +117,8 @@ Put every secret into `.env` yourself. Never paste keys into chat or commit them
 - [ ] **Your accounts** in `config/accounts.yaml`: one per platform per brand.
 - [ ] **Guardrail numbers** in `config/guardrails.yaml`: clip length, posting windows, daily cap. Then set `status: set`.
 - [ ] **Posting access** (M5): a Google Cloud project for the YouTube Data API, and either a posting service key or your own TikTok and Meta developer apps. Their audits take 1–4 weeks, so apply early. See [docs/PLATFORMS.md](docs/PLATFORMS.md).
-- [ ] **Anthropic API key** (M3, optional): for Claude clip picking.
-- [ ] **A host**: your own computer is fine for dry-run. A small VPS for daily unattended runs.
+- [ ] **Anthropic API key** (M3, optional): your own, for Claude clip picking. Set a spend limit on it.
+- [ ] **A host**: your own computer is enough. A small VPS only if you want runs while it's off.
 
 ## Making money with it
 
@@ -115,7 +130,7 @@ Three models, most predictable first. Numbers are rough and vary a lot.
 | **Clip agency** | A creator pays you a monthly fee to run their official clips channel | $300–2,000 per creator per month |
 | **Paid clipping campaigns** | A creator or brand pays per 1,000 views on clips of their content | Median near $1 per 1,000 views |
 
-Running costs are about $25–60 a month for one or two sources, mostly a small server. See [Costs](docs/ARCHITECTURE.md#costs).
+The tool itself is free to run on your own computer. See [Costs](docs/COSTS.md).
 
 ## Timeline
 
